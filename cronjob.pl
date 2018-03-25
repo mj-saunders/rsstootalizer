@@ -95,6 +95,10 @@ FEED: foreach my $feed (@feeds){
 			$data{status} = $status;
 			$ENV{status} = encode_json({%data});
 
+			# encode_json breaks '\n' chars - turns them into '\\n'
+                        # Fix them
+                        $ENV{status} =~ s/\\\\n/\\n/g;
+
 			open(DATA, "./post_status.bash '$user->{data}->{access_token}' '$user->{data}->{instance}' |");
 			my $reply = "";
 			{
