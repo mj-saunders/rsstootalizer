@@ -10,6 +10,8 @@ use RSSTootalizer::User;
 use RSSTootalizer::Entry;
 use RSSTootalizer::DB;
 
+my $VERBOSE = 1;
+
 our $config = "";
 open CONFIG, "rsstootalizer.conf.json" or die "Cannot open rsstootalizer.conf.json";
 {
@@ -34,6 +36,9 @@ sub Error {{{
 # Force Unicode output
 binmode STDERR, ":utf8";
 binmode STDOUT, ":utf8";
+
+if ($VERBOSE) {print STDOUT "Checking for new entries\n";}
+my $new_entries = 0;
 
 my @feeds = RSSTootalizer::Feed->all();
 FEED: foreach my $feed (@feeds){
@@ -96,6 +101,8 @@ FEED: foreach my $feed (@feeds){
 				local $/ = undef;
 				$reply = <DATA>;
 			}
+
+			if ($VERBOSE) {$new_entries += 1;}
 		}
 
 		my %ne;
@@ -106,3 +113,8 @@ FEED: foreach my $feed (@feeds){
 }
 
 RSSTootalizer::DB->doUPDATE("UPDATE `users` SET session_id = 'invalid' WHERE TIME_TO_SEC(NOW()) - TIME_TO_SEC(`valid_from`) > 60*60*4;"); # invalidate old sessions
+
+if ($VERBOSE) {
+	$new_entries ? ($new_entries > 1 ? print "$new_entries new entries\n" : print "$new_entries new entry\n") : print "No new entries\n";
+	print STDOUT "Done\n";
+}
