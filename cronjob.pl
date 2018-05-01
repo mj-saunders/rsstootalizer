@@ -93,6 +93,16 @@ FEED: foreach my $feed (@feeds){
 				$status =~ s/^(.{497}).*$/$1.../g;
 			}
 			$data{status} = $status;
+
+			# Visibility of a toot can be 'direct', 'private', 'unlisted' or 'public'
+                        # 'direct' and 'unlisted' are irrelevant
+                        # 'private' posts only to followers [default]
+                        # 'public' posts to public timelines [ethical issue?]
+                        # [* Should be set per feed in the sql db *]
+                        # [* Hardcoded here temporarily for testing *]
+                        my $visibility = 'public';
+                        $data{visibility} = $visibility;
+
 			$ENV{status} = encode_json({%data});
 
 			# encode_json breaks '\n' chars - turns them into '\\n'
@@ -106,7 +116,7 @@ FEED: foreach my $feed (@feeds){
 				$reply = <DATA>;
 			}
 
-			if ($VERBOSE) {$new_entries += 1;}
+			$new_entries += 1;
 		}
 
 		my %ne;
