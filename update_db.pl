@@ -27,7 +27,7 @@ binmode STDOUT, ":utf8";
 my @migrations = glob ("migrations/*sql");
 foreach my $migration (@migrations){
 	my $sth = RSSTootalizer::DB->doSELECT("SELECT * FROM migrations WHERE name = ?", $migration);
-	if (scalar(@$sth) == 0){
+	if ( scalar(@$sth) == 0 ){
 		print "Running migration $migration\n";
 		open (M, "<", $migration);
 		my $sql = "";

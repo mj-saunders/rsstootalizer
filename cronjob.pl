@@ -41,12 +41,16 @@ if ($VERBOSE) {print STDOUT "Checking for new entries\n";}
 my $new_entries = 0;
 
 my @feeds = RSSTootalizer::Feed->all();
+# For each Feed stored in database
 FEED: foreach my $feed (@feeds){
 	next FEED unless $feed;
 	next FEED unless $feed->{data}->{enabled};
+	# If enabled, fetch the RSS xml
 	my $entries = $feed->fetch_entries();
 	next FEED unless $entries;
+	# For each entry in the xml file
 	ENTRY: foreach my $entry ($entries->items){
+		# Does the entry already exist in the database?
 		my @seen_entries = $feed->entry_by("entry_link", $entry->link());
 		next ENTRY if ((scalar @seen_entries) > 0);
 
