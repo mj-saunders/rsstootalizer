@@ -1,7 +1,7 @@
 {
 	"mysql": {
 		"host": "mysql.example.com",
-		"database": "rsstootalizer_production",
+		"database": "rsstootalizer_development",
 		"user": "rsstootalizer",
 		"pass": "secret123"
 	},
