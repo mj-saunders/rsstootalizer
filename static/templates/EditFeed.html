@@ -70,6 +70,19 @@
 			</div>
 			</form>
 
+			<form id="form_digest" method="POST">
+			<input type="hidden" name="action" value="savedigest">
+			<h3>Toot Digest</h3>
+			<div>
+				For highly active feeds you may want to toot multiple posts together rather than separately avoiding a flood.<br />
+				<i>To avoid repetition of 'Format' for each post within a digest, use the Signature field for information that should appear only once i.e. hashtags.</i><br />
+				<input type="text" id="diglim" maxlength=2 value="<TMPL_VAR NAME="digestlimit">" name="digestlimit"> posts will be combined into a digest.<br />
+				<input type="text" placeholder="Signed #RSSTootalizer" maxlength=100 value="<TMPL_VAR NAME="digestsig">" name="digestsig" class="btn-block"><br />
+				<input type="Submit" value="Save digest" class="btn btn-primary">
+				<TMPL_IF NAME="digestenabled"><a class="btn btn-danger disabledigest" data-id="<TMPL_VAR NAME="feed_id">" href="#">Disable</a><TMPL_ELSE><a class="btn btn-default enabledigest" data-id="<TMPL_VAR NAME="feed_id">" href="#">Enable</a></TMPL_IF><br />
+			</div>
+			</form>
+
 		</div>
 	</div>
 </div>
