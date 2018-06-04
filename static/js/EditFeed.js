@@ -67,4 +67,15 @@ function RSSTootalizerOnReady(){
 	for (i=0; i<filters.length; i++){
 		appendFilter(filters[i].ID, filters[i].field, filters[i].regex, filters[i].type, filters[i].match);
 	}
+
+	$("a.enabledigest").on("click", function(){
+                var btn = $(this);
+                var l = "index.pl?mode=EditFeed&id="+btn.data("id")+"&enabledigest="+btn.data("id");
+                document.location.href=l;
+        });
+        $("a.disabledigest").on("click", function(){
+                var btn = $(this);
+                var l = "index.pl?mode=EditFeed&id="+btn.data("id")+"&disabledigest="+btn.data("id");
+                document.location.href=l;
+        });
 }

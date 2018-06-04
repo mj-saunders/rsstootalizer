@@ -63,6 +63,20 @@ sub fill_content {
 		}
 	}
 
+	if ($main::FORM{enabledigest} and "x".$main::FORM{enabledigest} eq "x".$feed->{data}->{ID}){
+		$feed->{data}->{digest_enabled} = 1;
+		$feed->save();
+	}
+	if ($main::FORM{disabledigest} and "x".$main::FORM{disabledigest} eq "x".$feed->{data}->{ID}){
+		$feed->{data}->{digest_enabled} = 0;
+		$feed->save();
+	}
+	if ($main::FORM{action} and "x".$main::FORM{action} eq "xsavedigest"){
+		$feed->{data}->{digest_limit} = $main::FORM{digestlimit};
+		$feed->{data}->{digest_signature} = $main::FORM{digestsig};
+		$feed->save();
+	}
+
 	my @param_entries;
 	my @filters = $feed->filters();
 	my $feeddata = $feed->fetch_entries();
@@ -106,6 +120,10 @@ sub fill_content {
 	$output->param("url", $feed->{data}->{url});
 	$output->param("feed_id", $feed->{data}->{ID});
 	$output->param("format", $feed->{data}->{format});
+
+	$output->param("digestenabled", $feed->{data}->{digest_enabled});
+	$output->param("digestlimit", $feed->{data}->{digest_limit});
+	$output->param("digestsig", $feed->{data}->{digest_signature});
 	return 1;
 }
 sub prerender {

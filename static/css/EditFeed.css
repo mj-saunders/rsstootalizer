@@ -4,3 +4,8 @@
 .red {
 	background-color: #FF8080;
 }
+
+#diglim {
+	font-family: Consolas, Lucida Console, monospace;
+	width: 3em;
+}
