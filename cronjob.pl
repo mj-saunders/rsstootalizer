@@ -10,8 +10,8 @@ use RSSTootalizer::User;
 use RSSTootalizer::Entry;
 use RSSTootalizer::DB;
 
-my $VERBOSE = 1;
-my $DEBUG = 1;
+my $VERBOSE = 0;
+my $DEBUG = 0;
 
 our $config = "";
 open CONFIG, "rsstootalizer.conf.json" or die "Cannot open rsstootalizer.conf.json";
