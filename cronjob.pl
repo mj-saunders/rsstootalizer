@@ -245,9 +245,7 @@ sub send_post {
 	# encode_json breaks '\n' chars - turns them into '\\n'
 	# Fix them
 	$ENV{status} =~ s/\\\\n/\\n/g;
-	#print STDOUT "$ENV{status}\n";
 
-	#print STDOUT "Upload - $user->{data}->{access_token} : $user->{data}->{instance}\n";
 	open(DATA, "./post_status.bash '$user->{data}->{access_token}' '$user->{data}->{instance}' |");
 	my $reply = "";
 	{
@@ -265,6 +263,5 @@ sub update_db {
 	$ne{feed_id} = $feed->{data}->{ID};
 	$ne{entry_link} = $link;
 
-	#print STDOUT "Update db - Feed $ne{feed_id} : $link\n";
 	RSSTootalizer::Entry->create(%ne);
 }
